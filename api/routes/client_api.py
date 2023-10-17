@@ -3,7 +3,7 @@ from misc.sqlinter import SQLInteractor
 import sqlite3
 
 client_blueprint = Blueprint('kellner_api', __name__)
-DATABASE = 'pfad_zur_deiner_datenbank.db'
+DATABASE = '../freieTische.db'
 
 def get_db():
     """Stelle eine Verbindung zur Datenbank her und speichere sie in g."""
@@ -13,7 +13,7 @@ def get_db():
     return g.db
 
 
-@client_blueprint.teardown_appcontext
+@client_blueprint.teardown_app_request
 def close_db(e):
     """Schließe die Datenbankverbindung sauber."""
     db = g.pop('db', None)
