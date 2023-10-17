@@ -21,7 +21,7 @@ def close_db(e):
         db.close()
 
 
-@app.route('/kellner/reservierungen', methods=['GET'])
+@app.route('/reservierungen', methods=['GET'])
 def alle_reservierungen_sehen():
     query = "SELECT * FROM reservierungen WHERE storniert = 'False'"
     reservierungen = get_db().fetch_all(query)

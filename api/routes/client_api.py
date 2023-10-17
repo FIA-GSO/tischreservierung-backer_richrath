@@ -21,7 +21,7 @@ def close_db(e):
         db.close()
 
 # Kellner API
-@app.route('/client/freieTische', methods=['GET'])
+@app.route('/freieTische', methods=['GET'])
 def freie_tische_anfragen():
     zeitpunkt = request.args.get('zeitpunkt')
     
@@ -35,7 +35,7 @@ def freie_tische_anfragen():
     
     return jsonify(freie_tische)
 
-@app.route('/client/reservieren', methods=['POST'])
+@app.route('/reservieren', methods=['POST'])
 def tisch_reservieren():
     zeitpunkt = request.json['zeitpunkt']
     tischnummer = request.json['tischnummer']
@@ -49,7 +49,7 @@ def tisch_reservieren():
     
     return jsonify({'message': 'Tisch reserviert'}), 201
 
-@app.route('/client/stornieren/<int:reservierungsnummer>', methods=['PUT'])
+@app.route('/stornieren/<int:reservierungsnummer>', methods=['PUT'])
 def reservierung_stornieren(reservierungsnummer):
     pin = request.json['pin']
     
