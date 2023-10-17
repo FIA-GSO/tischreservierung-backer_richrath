@@ -1,8 +1,8 @@
-from flask import Flask, request, jsonify, g
+from flask import Blueprint, request, jsonify, g
 from misc.sqlinter import SQLInteractor
 import sqlite3
 
-app = Flask(__name__)
+client_blueprint = Blueprint('kellner_api', __name__)
 DATABASE = 'pfad_zur_deiner_datenbank.db'
 
 def get_db():
@@ -13,7 +13,7 @@ def get_db():
     return g.db
 
 
-@app.teardown_appcontext
+@client_blueprint.teardown_appcontext
 def close_db(e):
     """Schließe die Datenbankverbindung sauber."""
     db = g.pop('db', None)
@@ -21,7 +21,7 @@ def close_db(e):
         db.close()
 
 # Kellner API
-@app.route('/freieTische', methods=['GET'])
+@client_blueprint.route('/freieTische', methods=['GET'])
 def freie_tische_anfragen():
     zeitpunkt = request.args.get('zeitpunkt')
     
@@ -35,7 +35,7 @@ def freie_tische_anfragen():
     
     return jsonify(freie_tische)
 
-@app.route('/reservieren', methods=['POST'])
+@client_blueprint.route('/reservieren', methods=['POST'])
 def tisch_reservieren():
     zeitpunkt = request.json['zeitpunkt']
     tischnummer = request.json['tischnummer']
@@ -49,7 +49,7 @@ def tisch_reservieren():
     
     return jsonify({'message': 'Tisch reserviert'}), 201
 
-@app.route('/stornieren/<int:reservierungsnummer>', methods=['PUT'])
+@client_blueprint.route('/stornieren/<int:reservierungsnummer>', methods=['PUT'])
 def reservierung_stornieren(reservierungsnummer):
     pin = request.json['pin']
     
