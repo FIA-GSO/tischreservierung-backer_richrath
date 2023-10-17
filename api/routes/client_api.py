@@ -2,7 +2,7 @@ from flask import Blueprint, request, jsonify, g
 from misc.sqlinter import SQLInteractor
 import sqlite3
 
-client_blueprint = Blueprint('kellner_api', __name__)
+client_blueprint = Blueprint('client_api', __name__)
 DATABASE = '../freieTische.db'
 
 def get_db():
