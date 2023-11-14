@@ -13,7 +13,7 @@ app.config["DEBUG"] = True  # Zeigt Fehlerinformationen im Browser, statt nur ei
 def home():
     return "<h1>Tischreservierung</h1>"
 
-app.register_blueprint(client_blueprint, url_prefix='/client')
-app.register_blueprint(kellner_blueprint, url_prefix='/kellner')
+app.register_blueprint(client_blueprint, url_prefix='/api/v1/client')
+app.register_blueprint(kellner_blueprint, url_prefix='/api/v1/kellner')
 
 app.run()
