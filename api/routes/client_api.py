@@ -51,13 +51,13 @@ def tisch_reservieren():
 
 @client_blueprint.route('/stornieren/<int:reservierungsnummer>', methods=['PUT'])
 def reservierung_stornieren(reservierungsnummer):
-    pin = request.json['pin']
+    pin = request.args.get('pin')
     
     # Überprüfe den PIN
     check_query = "SELECT pin FROM reservierungen WHERE reservierungsnummer = ?"
     actual_pin = get_db().fetch_one(check_query, (reservierungsnummer,))
     
-    if not actual_pin or actual_pin[0] != pin:
+    if not actual_pin or int(actual_pin[0]) != int(pin):
         return jsonify({'message': 'Falscher PIN'}), 403
     
     # Storniere die Reservierung
