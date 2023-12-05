@@ -20,8 +20,25 @@ def close_db(e):
     if db is not None:
         db.close()
 
-# Kellner API
-@client_blueprint.route('/freieTische', methods=['GET'])
+# Client API -> Freie Tische anfragen -> Methode: GET -> Pfad: [api.py router]/tische
+###
+# Request Parameter:
+#  - zeitpunkt: Der Zeitpunkt, zu dem die Tische frei sein sollen
+# Response:
+#  - JSON-Array mit freien Tischen
+#  - Beispiel:
+#    [
+#      {
+#        "tischnummer": 1,
+#        "anzahlPlaetze": 4
+#      },
+#      {
+#        "tischnummer": 2,
+#        "anzahlPlaetze": 6
+#      }
+#    ]
+###
+@client_blueprint.route('/tische', methods=['GET'])
 def freie_tische_anfragen():
     zeitpunkt = request.args.get('zeitpunkt')
     
@@ -35,7 +52,7 @@ def freie_tische_anfragen():
     
     return jsonify(freie_tische)
 
-@client_blueprint.route('/reservieren', methods=['POST'])
+@client_blueprint.route('/tische/reservieren', methods=['POST'])
 def tisch_reservieren():
     zeitpunkt = request.json['zeitpunkt']
     tischnummer = request.json['tischnummer']
@@ -49,7 +66,7 @@ def tisch_reservieren():
     
     return jsonify({'message': 'Tisch reserviert'}), 201
 
-@client_blueprint.route('/stornieren/<int:reservierungsnummer>', methods=['PUT'])
+@client_blueprint.route('/tische/<int:reservierungsnummer>', methods=['PUT'])
 def reservierung_stornieren(reservierungsnummer):
     pin = request.args.get('pin')
     

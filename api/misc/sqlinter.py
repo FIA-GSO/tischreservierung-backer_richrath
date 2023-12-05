@@ -15,6 +15,7 @@ class SQLInteractor:
             self.connection = sqlite3.connect(self.db_path)
             return self.connection
         except Error as e:
+            """Fehlerausgabe wenn Verbindung nicht möglich ist."""
             print(f"Fehler beim Verbinden den DB: {e}")
             return None
 
@@ -31,6 +32,7 @@ class SQLInteractor:
             self.connection.commit()
             return cursor
         except Error as e:
+            """Fehlerausgabe wenn Abfrage nicht möglich ist. Z.b. falsche Syntax."""
             print(f"Fehler in SQL-Abfrage: {e}")
             return None
 
@@ -38,6 +40,7 @@ class SQLInteractor:
         """Rufe alle Ergebnisse einer Abfrage ab."""
         cursor = self.execute_query(query, params)
         if cursor:
+            """cursor beinhaltet die Ergebnisse der Abfrage. fetchall() gibt diese als Liste zurück."""
             return cursor.fetchall()
         return None
 
