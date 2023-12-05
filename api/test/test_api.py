@@ -8,6 +8,9 @@ import os
 # Füge das übergeordnete Verzeichnis zum Suchpfad hinzu
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 from api import create_app, client_blueprint, kellner_blueprint
+from routes.client_api import client_blueprint  # Importiere den Client-Blueprint
+from routes.kellner_api import kellner_blueprint  # Importiere den Kellner
+
 
 class UnitTest(TestCase):
     
@@ -15,8 +18,8 @@ class UnitTest(TestCase):
         app = create_app()
         app.config['TESTING'] = True
         # Registriere die Blueprints in der Test-App
-        #app.register_blueprint(client_blueprint, url_prefix='/api/v1/client')
-        #app.register_blueprint(kellner_blueprint, url_prefix='/api/v1/kellner')
+        app.register_blueprint(client_blueprint, url_prefix='/api/v1/client')
+        app.register_blueprint(kellner_blueprint, url_prefix='/api/v1/kellner')
         return app.test_client()
 
     #Teste Default Route ("/" | GET)

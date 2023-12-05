@@ -21,6 +21,7 @@ def close_db(e):
         db.close()
 
 
+# Kellner API -> Tischreservierungen einsehen -> Methode: GET -> Pfad: [api.py router]/reservierungen
 @kellner_blueprint.route('/reservierungen', methods=['GET'])
 def alle_reservierungen_sehen():
     query = "SELECT * FROM reservierungen WHERE storniert = 'False'"
